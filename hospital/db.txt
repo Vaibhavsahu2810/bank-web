@@ -1,0 +1,38 @@
+-- Patient Management
+CREATE TABLE Patients (
+    PatientID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(100),
+    DOB DATE,
+    Gender VARCHAR(10),
+    Contact VARCHAR(50),
+    Address TEXT,
+    RegistrationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Appointment Management
+CREATE TABLE Appointments (
+    AppointmentID INT AUTO_INCREMENT PRIMARY KEY,
+    PatientID INT,
+    DoctorID INT,
+    AppointmentDateTime DATETIME,
+    Status VARCHAR(20),
+    FOREIGN KEY (PatientID) REFERENCES Patients(PatientID),
+    FOREIGN KEY (DoctorID) REFERENCES Doctors(DoctorID)
+);
+
+-- Doctor Management
+CREATE TABLE Doctors (
+    DoctorID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(100),
+    Specialization VARCHAR(50),
+    Availability TEXT
+);
+
+CREATE TABLE DoctorSchedules (
+    ScheduleID INT AUTO_INCREMENT PRIMARY KEY,
+    DoctorID INT,
+    DayOfWeek VARCHAR(10),
+    StartTime TIME,
+    EndTime TIME,
+    FOREIGN KEY (DoctorID) REFERENCES Doctors(DoctorID)
+);

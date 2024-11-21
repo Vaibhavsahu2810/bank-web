@@ -1,0 +1,35 @@
+-- Table: Departments
+CREATE TABLE Departments (
+    DeptID INT AUTO_INCREMENT PRIMARY KEY,
+    DeptName VARCHAR(50) NOT NULL UNIQUE
+);
+
+-- Table: Students
+CREATE TABLE Students (
+    RollNumber VARCHAR(10) PRIMARY KEY,
+    StudentName VARCHAR(50) NOT NULL,
+    DeptID INT NOT NULL,
+    Program VARCHAR(20) NOT NULL,
+    JoiningYear INT NOT NULL,
+    FOREIGN KEY (DeptID) REFERENCES Departments(DeptID)
+);
+
+-- Table: Courses
+CREATE TABLE Courses (
+    CourseCode VARCHAR(10) PRIMARY KEY,
+    CourseName VARCHAR(100) NOT NULL,
+    DeptID INT NOT NULL,
+    OfferingYear INT NOT NULL,
+    Credits INT NOT NULL CHECK (Credits IN (2, 4)),
+    FOREIGN KEY (DeptID) REFERENCES Departments(DeptID)
+);
+
+-- Table: StudentCourses
+CREATE TABLE StudentCourses (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    RollNumber VARCHAR(10) NOT NULL,
+    CourseCode VARCHAR(10) NOT NULL,
+    Grade CHAR(1) NOT NULL CHECK (Grade IN ('A', 'B', 'C', 'D')),
+    FOREIGN KEY (RollNumber) REFERENCES Students(RollNumber),
+    FOREIGN KEY (CourseCode) REFERENCES Courses(CourseCode)
+);

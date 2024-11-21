@@ -1,0 +1,50 @@
+-- Step 1: Create the Database
+CREATE DATABASE LibraryManagementSystem;
+
+-- Use the created database
+USE LibraryManagementSystem;
+
+-- Step 2: Create Tables
+-- 2.1: Table for books
+CREATE TABLE Books (
+    ISBN INT PRIMARY KEY,
+    Title VARCHAR(255),
+    Author VARCHAR(255),
+    Publisher VARCHAR(255),
+    Pages INT
+);
+
+-- 2.2: Table for students
+CREATE TABLE Students (
+    RollNumber VARCHAR(20) PRIMARY KEY,
+    Name VARCHAR(255),
+    Semester INT,
+    Branch VARCHAR(50)
+);
+
+-- 2.3: Table for transactions (book issues/returns)
+CREATE TABLE Transactions (
+    TransactionID INT AUTO_INCREMENT PRIMARY KEY,
+    RollNumber VARCHAR(20),
+    ISBN INT,
+    IssueDate DATE,
+    DueDate DATE,
+    ReturnDate DATE,
+    FineAmount DECIMAL(10, 2),
+    FOREIGN KEY (RollNumber) REFERENCES Students(RollNumber),
+    FOREIGN KEY (ISBN) REFERENCES Books(ISBN)
+);
+
+-- Step 3: Create a table for roles (librarians and staff)
+CREATE TABLE Roles (
+    RoleID INT AUTO_INCREMENT PRIMARY KEY,
+    RoleName VARCHAR(50)
+);
+
+-- Step 4: Assign roles to users
+CREATE TABLE UserRoles (
+    UserID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255),
+    RoleID INT,
+    FOREIGN KEY (RoleID) REFERENCES Roles(RoleID)
+);
